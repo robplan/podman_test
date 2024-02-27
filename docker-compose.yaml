@@ -1,0 +1,26 @@
+services:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: welcome
+    volumes:
+      - ./tmp/postgresql:/var/lib/postgresql
+    ports:
+      - 5432:5432
+  backend:
+    stdin_open: true
+    tty: true
+    command: ash
+    ports: 
+      - "3000:3000"
+    volumes:
+      - .:/app
+    build:
+      context: .
+      secrets:
+        - source: bundle
+          target: /root/.bundle/config
+secrets:
+  bundle:
+    file: ~/.bundle/config
