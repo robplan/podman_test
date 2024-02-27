@@ -1,6 +1,8 @@
+volumes:
+  backend_src:
 services:
   database:
-    image: postgres
+    image: arm64v8/postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: welcome
@@ -15,7 +17,7 @@ services:
     ports: 
       - "3000:3000"
     volumes:
-      - .:/app
+      - .:/app:cached
     build:
       context: .
       secrets:
